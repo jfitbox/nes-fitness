@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NES FITNESS - Australia's Premier Fitness</title>
+
+    <!-- Google Fonts: Montserrat (Geometric) + Inter (Body) + Noto Sans KR (Standard Block for Logo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-gray': '#111111',
+                        'brand-gold': '#E5A900', /* Solid, Vibrant Gold */
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'noto': ['Noto Sans KR', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-image': "url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Hide Scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Clean Selection */
+        ::selection {
+            background: #E5A900;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-black text-white font-inter antialiased overflow-x-hidden">
+
+    <!-- Navbar: Solid & Clean -->
+    <nav class="fixed w-full z-50 bg-brand-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-[1920px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-3">
+                <i data-lucide="box" class="text-brand-gold w-6 h-6 stroke-[2.5]"></i>
+                <!-- Logo Font: Noto Sans KR for Standard Block J -->
+                <span class="font-noto font-black text-2xl tracking-normal uppercase leading-none"
+                    style="letter-spacing: -0.02em;">
+                    NES FITNESS
+                </span>
+            </a>
+
+            <!-- Menu -->
+            <div class="hidden md:flex items-center gap-10 font-montserrat font-bold text-sm text-gray-400">
+                <a href="clubs.html" class="hover:text-white transition-colors">Clubs</a>
+                <a href="membership.html" class="hover:text-white transition-colors">Membership</a>
+                <a href="training.html" class="hover:text-white transition-colors">Training</a>
+                <a href="app.html" class="hover:text-white transition-colors">App</a>
+            </div>
+
+            <!-- CTA -->
+            <a href="join.html"
+                class="hidden md:block bg-white text-black hover:bg-brand-gold transition-colors px-6 py-2 rounded-full font-montserrat font-bold text-sm">
+                Join Now
+            </a>
+            <button class="md:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Bold & Direct -->
+    <section class="relative h-screen min-h-[700px] w-full flex items-center justify-center px-6 overflow-hidden">
+        <!-- BG -->
+        <div class="absolute inset-0 z-0 bg-hero-image bg-cover bg-center opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/50 to-transparent z-10"></div>
+
+        <!-- Content -->
+        <div class="relative z-20 text-center max-w-5xl pt-20">
+            <h1
+                class="font-montserrat font-black text-6xl md:text-8xl lg:text-9xl text-white mb-6 uppercase tracking-tight leading-none">
+                NES <span class="text-brand-gold">FITNESS</span>
+            </h1>
+            <p class="font-inter font-medium text-gray-300 text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+                <span class="text-brand-gold font-bold">N</span>urturing movement,
+                <span class="text-brand-gold font-bold">E</span>mpowering people, and building real
+                <span class="text-brand-gold font-bold">S</span>trength for life.
+            </p>
+
+            <a href="clubs.html"
+                class="inline-block bg-white text-black hover:bg-brand-gold transition-colors px-10 py-4 rounded-full font-montserrat font-bold text-sm tracking-widest uppercase shadow-lg">
+                Find Your Club
+            </a>
+        </div>
+    </section>
+
+    <!-- Benefits: Clean Grid -->
+    <section class="bg-brand-black py-24 px-6 md:px-12">
+        <div class="max-w-[1920px] mx-auto">
+            <h2 class="font-montserrat font-black text-4xl text-white mb-16 uppercase">Member <span
+                    class="text-brand-gold">Benefits</span></h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div
+                    class="bg-brand-gray p-10 rounded-3xl hover:bg-white hover:text-black group transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center mb-6 text-black">
+                        <i data-lucide="clock" class="w-7 h-7 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-2xl mb-4">24/7 Access</h3>
+                    <p class="font-inter text-gray-400 group-hover:text-gray-600 font-medium leading-relaxed">
+                        Train on your terms. Our Brisbane flagship and future locations are open 24/7.
+                    </p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="bg-brand-gray p-10 rounded-3xl hover:bg-white hover:text-black group transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center mb-6 text-black">
+                        <i data-lucide="globe" class="w-7 h-7 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-2xl mb-4">Franchise Access</h3>
+                    <p class="font-inter text-gray-400 group-hover:text-gray-600 font-medium leading-relaxed">
+                        One key fob grants you access to our growing network of NES FITNESS clubs across Australia.
+                    </p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="bg-brand-gray p-10 rounded-3xl hover:bg-white hover:text-black group transition-all duration-300">
+                    <div class="w-14 h-14 bg-brand-gold rounded-full flex items-center justify-center mb-6 text-black">
+                        <i data-lucide="smartphone" class="w-7 h-7 stroke-[2.5]"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-2xl mb-4">Smart App</h3>
+                    <p class="font-inter text-gray-400 group-hover:text-gray-600 font-medium leading-relaxed">
+                        Workouts, coaching, and progress tracking all in your pocket.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase: Real Experience -->
+    <section class="bg-brand-black py-0">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Strength Video -->
+            <div class="relative h-[600px] border-r border-white/5 group overflow-hidden">
+                <video autoplay loop muted playsinline
+                    class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                    poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070">
+                    <source src="https://videos.pexels.com/video-files/8411307/8411307-uhd_2560_1440_25fps.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-12 left-12 p-6 z-10">
+                    <h3 class="font-montserrat font-black text-4xl text-white uppercase mb-2">Strength</h3>
+                    <p class="text-gray-300 font-bold mb-6">Barbell & Kettlebell Mastery.</p>
+                    <a href="training.html"
+                        class="inline-flex items-center gap-2 text-brand-gold font-bold uppercase text-sm hover:text-white transition-colors">
+                        View Equipment <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Pilates Video -->
+            <div class="relative h-[600px] group overflow-hidden">
+                <video autoplay loop muted playsinline
+                    class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
+                    poster="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070">
+                    <source src="https://videos.pexels.com/video-files/4436575/4436575-uhd_2560_1440_25fps.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-12 left-12 p-6 z-10">
+                    <h3 class="font-montserrat font-black text-4xl text-white uppercase mb-2">Pilates</h3>
+                    <p class="text-gray-300 font-bold mb-6">Refine your movement & core.</p>
+                    <a href="training.html"
+                        class="inline-flex items-center gap-2 text-brand-gold font-bold uppercase text-sm hover:text-white transition-colors">
+                        View Classes <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials: Trust -->
+    <section class="bg-brand-gray py-24 px-6 md:px-12">
+        <div class="max-w-[1920px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="font-montserrat font-black text-4xl text-white uppercase mb-2">Member <span
+                            class="text-brand-gold">Stories</span></h2>
+                    <p class="text-gray-400">Hear from the Brisbane community.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button
+                        class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-colors"><i
+                            data-lucide="chevron-left" class="w-6 h-6"></i></button>
+                    <button
+                        class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center hover:bg-brand-gold transition-colors"><i
+                            data-lucide="chevron-right" class="w-6 h-6"></i></button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-black p-8 rounded-3xl border border-white/5">
+                    <div class="flex text-brand-gold mb-6">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 text-lg italic mb-6">"The best gym in Brisbane CBD. The equipment is
+                        top-tier and the 24/7 access fits my shift work perfectly."</p>
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-gray-700 rounded-full bg-[url('https://randomuser.me/api/portraits/men/32.jpg')] bg-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">James Wilson</h4>
+                            <p class="text-xs text-gray-500 uppercase">Member since 2023</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 2 -->
+                <div class="bg-black p-8 rounded-3xl border border-white/5">
+                    <div class="flex text-brand-gold mb-6">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 text-lg italic mb-6">"I was intimidated by gyms before, but the community
+                        here is so welcoming. The Pilates class is a game changer."</p>
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-gray-700 rounded-full bg-[url('https://randomuser.me/api/portraits/women/44.jpg')] bg-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Sarah Chen</h4>
+                            <p class="text-xs text-gray-500 uppercase">Member since 2024</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Review 3 -->
+                <div class="bg-black p-8 rounded-3xl border border-white/5">
+                    <div class="flex text-brand-gold mb-6">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 text-lg italic mb-6">"Clean, modern, and serious. Exactly what I need for my
+                        strength training. Love the app integration too."</p>
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-gray-700 rounded-full bg-[url('https://randomuser.me/api/portraits/men/85.jpg')] bg-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white">Michael O'Connor</h4>
+                            <p class="text-xs text-gray-500 uppercase">Foundation Member</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations: Rounded & Clean -->
+    <section class="bg-white py-24 px-6 md:px-12 text-center text-brand-black">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="font-montserrat font-black text-4xl mb-4 uppercase">Find NES FITNESS</h2>
+            <p class="font-inter text-gray-600 mb-10 font-bold">Search for a location near you</p>
+
+            <div class="bg-gray-100 p-2 rounded-full flex items-center shadow-lg">
+                <div class="pl-6 text-gray-400">
+                    <i data-lucide="search" class="w-6 h-6"></i>
+                </div>
+                <input type="text" placeholder="Enter City, State or Location"
+                    class="w-full bg-transparent p-4 text-brand-black font-montserrat font-bold focus:outline-none placeholder-gray-400">
+                <button
+                    class="bg-black text-white hover:bg-brand-gold hover:text-black transition-colors px-8 py-4 rounded-full font-montserrat font-bold uppercase text-sm">
+                    Search
+                </button>
+            </div>
+            <div
+                class="mt-8 flex justify-center items-center gap-2 text-brand-gold hover:text-black cursor-pointer transition-colors font-montserrat font-bold text-sm uppercase">
+                <i data-lucide="navigation" class="w-4 h-4"></i> Use my location
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer: Solid Black -->
+    <footer class="bg-black py-20 px-6 md:px-12 border-t border-white/10">
+        <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <i data-lucide="box" class="text-white w-8 h-8 stroke-[2]"></i>
+                <span class="font-noto font-black text-2xl text-white uppercase" style="letter-spacing: -0.02em;">NES
+                    FITNESS</span>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-8 font-montserrat font-bold text-sm text-gray-400 uppercase">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Use</a>
+                <a href="#" class="hover:text-white transition-colors">Contact Us</a>
+                <a href="#" class="hover:text-white transition-colors">Franchise</a>
+            </div>
+
+            <p class="font-inter text-xs text-gray-600 font-medium">© 2024 NES FITNESS Australia Pty Ltd.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

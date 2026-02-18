@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Now | NES FITNESS Australia</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-gray': '#111111',
+                        'brand-gold': '#E5A900',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'noto': ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-brand-black text-white font-inter h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- Left: Image -->
+    <div class="hidden md:block md:w-1/2 lg:w-[45%] bg-brand-gray relative">
+        <div
+            class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2069')] bg-cover bg-center opacity-60">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-black/50 to-transparent"></div>
+        <div class="absolute bottom-12 left-12 p-8">
+            <i data-lucide="box" class="text-brand-gold w-12 h-12 stroke-[2] mb-6"></i>
+            <h2 class="font-montserrat font-black text-5xl uppercase leading-tight mb-4">Start Your<br>Transformation
+            </h2>
+            <p class="text-white/80 text-lg">Join Australia's premier fitness community today.</p>
+        </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="w-full md:w-1/2 lg:w-[55%] flex flex-col relative overflow-y-auto">
+        <!-- Close Button -->
+        <a href="index.html" class="absolute top-8 right-8 text-gray-400 hover:text-white"><i data-lucide="x"
+                class="w-8 h-8"></i></a>
+
+        <div class="flex-1 flex items-center justify-center p-8 md:p-20">
+            <div class="w-full max-w-lg">
+                <h1 class="font-montserrat font-black text-3xl mb-2">Become a Member</h1>
+                <p class="text-gray-400 mb-10">Step inside NES FITNESS Brisbane</p>
+
+                <form class="space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">First Name</label>
+                            <input type="text"
+                                class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Last Name</label>
+                            <input type="text"
+                                class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Email Address</label>
+                        <input type="email"
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Mobile Number</label>
+                        <input type="tel" placeholder="+61 400 000 000"
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Home Club</label>
+                        <select
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors text-white appearance-none">
+                            <option>Brisbane CBD (Flagship)</option>
+                            <option disabled>Sydney (Coming Soon)</option>
+                            <option disabled>Melbourne (Coming Soon)</option>
+                        </select>
+                    </div>
+
+                    <button type="button"
+                        class="w-full bg-brand-gold text-black font-montserrat font-black uppercase py-5 rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-brand-gold/20">
+                        Continue to Payment
+                    </button>
+
+                    <p class="text-center text-xs text-gray-600 mt-6">
+                        By joining, you agree to our Terms of Service and Privacy Policy.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

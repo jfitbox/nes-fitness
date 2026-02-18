@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs | NES FITNESS Australia</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-gray': '#111111',
+                        'brand-gold': '#E5A900',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'noto': ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::selection {
+            background: #E5A900;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-black text-white font-inter">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-brand-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-[1920px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <i data-lucide="box" class="text-brand-gold w-6 h-6 stroke-[2.5]"></i>
+                <span class="font-noto font-black text-2xl tracking-normal uppercase leading-none"
+                    style="letter-spacing: -0.02em;">NES FITNESS</span>
+            </a>
+            <div class="hidden md:flex items-center gap-10 font-montserrat font-bold text-sm text-gray-400">
+                <a href="clubs.html" class="text-white">Clubs</a>
+                <a href="membership.html" class="hover:text-white transition-colors">Membership</a>
+                <a href="training.html" class="hover:text-white transition-colors">Training</a>
+                <a href="app.html" class="hover:text-white transition-colors">App</a>
+            </div>
+            <a href="join.html"
+                class="hidden md:block bg-white text-black hover:bg-brand-gold transition-colors px-6 py-2 rounded-full font-montserrat font-bold text-sm">Join
+                Now</a>
+            <button class="md:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-40 pb-20 px-6 text-center">
+        <h1 class="font-montserrat font-black text-5xl md:text-7xl uppercase mb-6">Find Your <span
+                class="text-brand-gold">Club</span></h1>
+        <p class="text-gray-400 max-w-2xl mx-auto">Starting from Brisbane, NES FITNESS is expanding across Australia.
+            Find
+            a premium fitness space near you.</p>
+    </section>
+
+    <!-- Search -->
+    <section class="px-6 mb-20">
+        <div class="max-w-2xl mx-auto bg-brand-gray p-2 rounded-full flex items-center border border-white/10">
+            <div class="pl-6 text-gray-400"><i data-lucide="search" class="w-6 h-6"></i></div>
+            <input type="text" placeholder="Enter Postcode or Suburb"
+                class="w-full bg-transparent p-4 text-white font-montserrat font-bold focus:outline-none placeholder-gray-600">
+            <button
+                class="bg-brand-gold text-black px-8 py-3 rounded-full font-montserrat font-bold uppercase text-sm">Search</button>
+        </div>
+    </section>
+
+    <!-- Club List -->
+    <section class="max-w-[1920px] mx-auto px-6 md:px-12 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Brisbane Flagship -->
+            <div class="bg-brand-gray rounded-3xl overflow-hidden border border-brand-gold/30 group">
+                <div
+                    class="h-64 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-montserrat font-bold text-2xl">Brisbane CBD</h3>
+                        <span class="bg-brand-gold text-black text-xs font-bold px-3 py-1 rounded-full uppercase">Open
+                            24/7</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> 123 Queen St, Brisbane City QLD 4000
+                    </p>
+
+                    <!-- Amenities -->
+                    <div class="flex gap-4 mb-6 pt-4 border-t border-white/5">
+                        <div class="text-gray-500 flex flex-col items-center gap-1" title="Sauna">
+                            <i data-lucide="waves" class="w-5 h-5"></i>
+                            <span class="text-[10px] uppercase font-bold">Sauna</span>
+                        </div>
+                        <div class="text-gray-500 flex flex-col items-center gap-1" title="WiFi">
+                            <i data-lucide="wifi" class="w-5 h-5"></i>
+                            <span class="text-[10px] uppercase font-bold">WiFi</span>
+                        </div>
+                        <div class="text-gray-500 flex flex-col items-center gap-1" title="Showers">
+                            <i data-lucide="droplets" class="w-5 h-5"></i>
+                            <span class="text-[10px] uppercase font-bold">Shower</span>
+                        </div>
+                        <div class="text-gray-500 flex flex-col items-center gap-1" title="Parking">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                            <span class="text-[10px] uppercase font-bold">Parking</span>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <a href="join.html"
+                            class="flex-1 bg-white text-black text-center py-3 rounded-xl font-bold hover:bg-brand-gold transition-colors">Join
+                            Now</a>
+                        <button class="px-4 border border-white/20 rounded-xl hover:bg-white/10"><i data-lucide="phone"
+                                class="w-5 h-5"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sydney (Coming Soon) -->
+            <div
+                class="bg-brand-gray rounded-3xl overflow-hidden border border-white/5 opacity-70 hover:opacity-100 transition-opacity">
+                <div class="h-64 bg-black flex items-center justify-center border-b border-white/5">
+                    <span class="font-montserrat font-bold text-gray-600 uppercase tracking-widest">Coming 2025</span>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-montserrat font-bold text-2xl text-gray-400">Sydney George St</h3>
+                        <span
+                            class="bg-gray-800 text-gray-400 text-xs font-bold px-3 py-1 rounded-full uppercase">Planning</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-6">Establishing our NSW Flagship.</p>
+                    <button
+                        class="w-full border border-white/10 text-gray-400 py-3 rounded-xl font-bold hover:bg-white/5 hover:text-white uppercase text-xs tracking-widest">Notify
+                        Me</button>
+                </div>
+            </div>
+
+            <!-- Melbourne (Coming Soon) -->
+            <div
+                class="bg-brand-gray rounded-3xl overflow-hidden border border-white/5 opacity-70 hover:opacity-100 transition-opacity">
+                <div class="h-64 bg-black flex items-center justify-center border-b border-white/5">
+                    <span class="font-montserrat font-bold text-gray-600 uppercase tracking-widest">Coming 2026</span>
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-montserrat font-bold text-2xl text-gray-400">Melbourne Central</h3>
+                        <span
+                            class="bg-gray-800 text-gray-400 text-xs font-bold px-3 py-1 rounded-full uppercase">Planning</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-6">Bringing the NES FITNESS standard to Victoria.</p>
+                    <button
+                        class="w-full border border-white/10 text-gray-400 py-3 rounded-xl font-bold hover:bg-white/5 hover:text-white uppercase text-xs tracking-widest">Notify
+                        Me</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Franchise CTA -->
+    <section class="bg-brand-gold text-black py-20 px-6 text-center">
+        <h2 class="font-montserrat font-black text-4xl uppercase mb-4">Own a Franchise</h2>
+        <p class="font-inter font-bold text-lg mb-8 max-w-xl mx-auto">Be part of Australia's fastest growing premium
+            fitness network. Territories available nationwide.</p>
+        <button
+            class="bg-black text-white px-10 py-4 rounded-full font-montserrat font-bold uppercase hover:scale-105 transition-transform">Enquire
+            Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-20 px-6 md:px-12 border-t border-white/10">
+        <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <i data-lucide="box" class="text-white w-8 h-8 stroke-[2]"></i>
+                <span class="font-noto font-black text-2xl text-white uppercase" style="letter-spacing: -0.02em;">NES
+                    FITNESS</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8 font-montserrat font-bold text-sm text-gray-400 uppercase">
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms</a>
+                <a href="#" class="hover:text-white">Contact</a>
+                <a href="#" class="hover:text-white">Franchise</a>
+            </div>
+            <p class="text-xs text-gray-600 font-medium">© 2024 NES FITNESS Australia Pty Ltd.</p>
+        </div>
+    </footer>
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Login | NES FITNESS Australia</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-gray': '#111111',
+                        'brand-gold': '#E5A900',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'noto': ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::selection {
+            background: #E5A900;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-black text-white font-inter h-screen flex items-center justify-center relative overflow-hidden">
+
+    <!-- Background -->
+    <div
+        class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070')] bg-cover bg-center opacity-20 blur-sm">
+    </div>
+    <div class="absolute inset-0 bg-brand-black/80"></div>
+
+    <!-- Login Card -->
+    <div
+        class="relative z-10 w-full max-w-md bg-brand-gray/80 backdrop-blur-md p-10 rounded-3xl border border-white/10 shadow-2xl">
+
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <a href="index.html" class="inline-flex items-center gap-2 mb-6 hover:opacity-80 transition-opacity">
+                <i data-lucide="box" class="text-brand-gold w-8 h-8 stroke-[2.5]"></i>
+                <span class="font-noto font-black text-2xl tracking-normal uppercase leading-none"
+                    style="letter-spacing: -0.02em;">NES FITNESS</span>
+            </a>
+            <h1 class="font-montserrat font-bold text-2xl">Welcome Back</h1>
+            <p class="text-gray-400 text-sm mt-2">Enter your details to access your account.</p>
+        </div>
+
+        <!-- Form -->
+        <form class="space-y-6">
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Email Address</label>
+                <div class="relative">
+                    <i data-lucide="mail" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                    <input type="email" placeholder="member@jfitbox.com.au"
+                        class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Password</label>
+                <div class="relative">
+                    <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                    <input type="password" placeholder="••••••••"
+                        class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center text-xs">
+                <label class="flex items-center gap-2 cursor-pointer text-gray-400 hover:text-white">
+                    <input type="checkbox"
+                        class="rounded bg-black border-white/20 text-brand-gold focus:ring-brand-gold">
+                    Remember me
+                </label>
+                <a href="#" class="text-brand-gold hover:underline">Forgot password?</a>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-brand-gold text-black font-montserrat font-black uppercase py-4 rounded-xl hover:bg-white transition-colors shadow-lg shadow-brand-gold/20">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-sm text-gray-400">
+            <p>Not a member yet? <a href="join.html"
+                    class="text-white font-bold hover:text-brand-gold transition-colors">Join Now</a></p>
+        </div>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
