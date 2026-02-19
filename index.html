@@ -380,29 +380,63 @@
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ⭐️ SUPABASE CONFIGURATION ⭐️
-        // Please replace these placeholders with your actual Supabase keys
-        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
-        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-        // Make functions global so inline onclick works
+        // 1. Define UI functions immediately (so they work even if Supabase fails)
         window.openModal = function () {
             const modal = document.getElementById('joinModal');
-            modal.classList.remove('hidden');
-            // Re-initialize icons inside modal if needed
-            if (window.lucide) lucide.createIcons();
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                if (window.lucide) lucide.createIcons();
+            } else {
+                console.error("Modal element not found!");
+            }
         }
 
         window.closeModal = function () {
             const modal = document.getElementById('joinModal');
-            modal.classList.add('hidden');
-            document.body.style.overflow = ''; // Restore scrolling
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
         }
 
+        // 2. Supabase Configuration
+        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
+        let supabase = null;
+
+        try {
+            if (typeof supabase !== 'undefined' && supabase.createClient) {
+                supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            } else if (window.supabase && window.supabase.createClient) {
+                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            } else {
+                console.error("Supabase library not loaded!");
+                // Try to initialize it anyway if global var exists
+                supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+            }
+        } catch (err) {
+            console.error("Supabase Init Error:", err);
+        }
+
+        // 3. Submit Function
         window.submitJoin = async function () {
-            console.log('Button clicked! Starting submission...');
+            alert('Processing your request...'); // Immediate feedback
+
+            if (!supabase) {
+                // Retry init if missed
+                try {
+                    if (window.supabase && window.supabase.createClient) {
+                        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                    }
+                } catch (e) { }
+
+                if (!supabase) {
+                    alert("System Error: Database connection failed. Please try again later.");
+                    return;
+                }
+            }
+
             const name = document.getElementById('modalName').value;
             const phone = document.getElementById('modalPhone').value;
 
@@ -418,16 +452,22 @@
 
                 if (error) throw error;
 
-                alert('Thank you! We will be in touch shortly.');
+                alert('Success! We will contact you shortly.');
                 closeModal();
                 document.getElementById('modalName').value = '';
                 document.getElementById('modalPhone').value = '';
 
             } catch (error) {
                 console.error('Supabase Error:', error);
-                alert('Error: ' + error.message + '\n\nPlease check your Supabase "Table Editor" or "RLS Policies".');
+                alert('Error: ' + error.message + '\n\n(Please verify RLS policies in Supabase)');
             }
         }
+
+        // 4. Confirmation Code (To verify update)
+        console.log("NES FITNESS System Loaded");
+        // alert("System Updated! Please try the Join button now."); 
+        // User asked to remove the alert if it works, but adding it temporarily for debugging is good.
+        // I'll leave it commented out to avoid annoying them, relying on "Processing..." alert in submit function.
     </script>
 </body>
 
