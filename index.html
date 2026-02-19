@@ -403,38 +403,34 @@
         // 2. Supabase Configuration
         const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
         const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
-        let supabase = null;
+        let db = null; // Use a different name to avoid shadowing the global 'supabase' library
 
-        try {
-            if (typeof supabase !== 'undefined' && supabase.createClient) {
-                supabase = supabase.createClient(supabaseUrl, supabaseKey);
-            } else if (window.supabase && window.supabase.createClient) {
-                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-            } else {
-                console.error("Supabase library not loaded!");
-                // Try to initialize it anyway if global var exists
-                supabase = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
+        function initDB() {
+            try {
+                if (window.supabase && window.supabase.createClient) {
+                    db = window.supabase.createClient(supabaseUrl, supabaseKey);
+                    console.log("Supabase DB Initialized");
+                } else {
+                    console.error("Supabase library not found");
+                }
+            } catch (err) {
+                console.error("DB Init Error:", err);
             }
-        } catch (err) {
-            console.error("Supabase Init Error:", err);
         }
+
+        // Initialize immediately if available, or wait a mo
+        initDB();
 
         // 3. Submit Function
         window.submitJoin = async function () {
-            alert('Processing your request...'); // Immediate feedback
+            alert('Button works! sending data...'); // Immediate feedback
 
-            if (!supabase) {
-                // Retry init if missed
-                try {
-                    if (window.supabase && window.supabase.createClient) {
-                        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-                    }
-                } catch (e) { }
+            // Try init again if needed
+            if (!db) initDB();
 
-                if (!supabase) {
-                    alert("System Error: Database connection failed. Please try again later.");
-                    return;
-                }
+            if (!db) {
+                alert("System Error: Database library failed to load. Please refresh the page.");
+                return;
             }
 
             const name = document.getElementById('modalName').value;
@@ -446,7 +442,7 @@
             }
 
             try {
-                const { data, error } = await supabase
+                const { data, error } = await db
                     .from('members')
                     .insert([{ name: name, phone: phone, message: 'Requested via Home Modal' }]);
 

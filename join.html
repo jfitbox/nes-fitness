@@ -99,41 +99,55 @@
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        <script>
         // ⭐️ SUPABASE CONFIGURATION ⭐️
-        // Please replace these placeholders with your actual Supabase URL and Key
-        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
-        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+            const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
 
-        window.sendToSupabase = async function () {
+            // Use 'db' to avoid conflict with global 'supabase' object from CDN
+            let db = null;
+            if (window.supabase) {
+                db = window.supabase.createClient(supabaseUrl, supabaseKey);
+        }
+
+            window.sendToSupabase = async function() {
+            if (!db && window.supabase) {
+                db = window.supabase.createClient(supabaseUrl, supabaseKey);
+            }
+
+            if (!db) {
+                alert("Error: Supabase library not loaded.");
+            return;
+            }
+
             const nameVal = document.getElementById('userName').value;
             const phoneVal = document.getElementById('userPhone').value;
             const messageVal = document.getElementById('userMessage').value;
 
             if (!nameVal || !phoneVal) {
                 alert("Please enter your name and phone number.");
-                return;
+            return;
             }
 
             try {
-                const { data, error } = await supabase
-                    .from('members')
-                    .insert([
-                        { name: nameVal, phone: phoneVal, message: messageVal }
-                    ]);
+                const {data, error} = await db
+            .from('members')
+            .insert([
+            {name: nameVal, phone: phoneVal, message: messageVal }
+            ]);
 
-                if (error) throw error;
+            if (error) throw error;
 
-                alert('Thank you! Your consultation request has been sent. We will contact you shortly.');
+            alert('Thank you! Your consultation request has been sent. We will contact you shortly.');
 
-                // Clear form
-                document.getElementById('userName').value = '';
-                document.getElementById('userPhone').value = '';
-                document.getElementById('userMessage').value = '';
+            // Clear form
+            document.getElementById('userName').value = '';
+            document.getElementById('userPhone').value = '';
+            document.getElementById('userMessage').value = '';
 
             } catch (error) {
                 console.error('Supabase Error:', error);
-                alert('Error: ' + error.message + '\n\nPlease check your Supabase "Table Editor" or "RLS Policies".');
+            alert('Error: ' + error.message + '\n\nPlease check your Supabase "Table Editor" or "RLS Policies".');
             }
         }
     </script>
