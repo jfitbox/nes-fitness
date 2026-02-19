@@ -62,49 +62,32 @@
                 <h1 class="font-montserrat font-black text-3xl mb-2">Become a Member</h1>
                 <p class="text-gray-400 mb-10">Step inside NES FITNESS Brisbane</p>
 
-                <form class="space-y-6">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">First Name</label>
-                            <input type="text"
-                                class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Last Name</label>
-                            <input type="text"
-                                class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
-                        </div>
+                <form class="space-y-6" onsubmit="event.preventDefault(); sendToSupabase();">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Name</label>
+                        <input type="text" id="userName" placeholder="Your Name"
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Email Address</label>
-                        <input type="email"
-                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number</label>
+                        <input type="tel" id="userPhone" placeholder="+61 400 000 000"
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Mobile Number</label>
-                        <input type="tel" placeholder="+61 400 000 000"
-                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors">
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Message</label>
+                        <textarea id="userMessage" rows="4" placeholder="How can we help you?"
+                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 resize-none"></textarea>
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Home Club</label>
-                        <select
-                            class="w-full bg-brand-gray border border-white/10 rounded-lg p-4 focus:border-brand-gold focus:outline-none transition-colors text-white appearance-none">
-                            <option>Brisbane CBD (Flagship)</option>
-                            <option disabled>Sydney (Coming Soon)</option>
-                            <option disabled>Melbourne (Coming Soon)</option>
-                        </select>
-                    </div>
-
-                    <button type="button"
+                    <button type="submit"
                         class="w-full bg-brand-gold text-black font-montserrat font-black uppercase py-5 rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-brand-gold/20">
-                        Continue to Payment
+                        Request Consultation
                     </button>
 
                     <p class="text-center text-xs text-gray-600 mt-6">
-                        By joining, you agree to our Terms of Service and Privacy Policy.
+                        By submitting, you agree to our Terms of Service and Privacy Policy.
                     </p>
                 </form>
             </div>
@@ -112,6 +95,48 @@
     </div>
 
     <script>lucide.createIcons();</script>
+
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ⭐️ SUPABASE CONFIGURATION ⭐️
+        // Please replace these placeholders with your actual Supabase URL and Key
+        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function sendToSupabase() {
+            const nameVal = document.getElementById('userName').value;
+            const phoneVal = document.getElementById('userPhone').value;
+            const messageVal = document.getElementById('userMessage').value;
+
+            if (!nameVal || !phoneVal) {
+                alert("Please enter your name and phone number.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('members')
+                    .insert([
+                        { name: nameVal, phone: phoneVal, message: messageVal }
+                    ]);
+
+                if (error) throw error;
+
+                alert('Thank you! Your consultation request has been sent. We will contact you shortly.');
+
+                // Clear form
+                document.getElementById('userName').value = '';
+                document.getElementById('userPhone').value = '';
+                document.getElementById('userMessage').value = '';
+
+            } catch (error) {
+                console.error('Supabase Error:', error);
+                alert('An error occurred. Please check the console for details or try again later.');
+            }
+        }
+    </script>
 </body>
 
 </html>

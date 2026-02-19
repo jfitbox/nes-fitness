@@ -84,7 +84,7 @@
             </div>
 
             <!-- CTA -->
-            <a href="join.html"
+            <a href="#" onclick="openModal(); return false;"
                 class="hidden md:block bg-white text-black hover:bg-brand-gold transition-colors px-6 py-2 rounded-full font-montserrat font-bold text-sm">
                 Join Now
             </a>
@@ -336,6 +336,96 @@
 
     <script>
         lucide.createIcons();
+    </script>
+
+    <!-- Join Modal -->
+    <div id="joinModal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+
+        <!-- Modal Content -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6">
+            <div
+                class="bg-brand-gray border border-brand-gold/20 rounded-3xl p-8 relative shadow-2xl shadow-brand-gold/10">
+                <!-- Close Button -->
+                <button onclick="closeModal()"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <div class="text-center mb-8">
+                    <i data-lucide="box" class="text-brand-gold w-10 h-10 stroke-[2] mx-auto mb-4"></i>
+                    <h3 class="font-montserrat font-black text-2xl text-white uppercase mb-2">Start Your Journey</h3>
+                    <p class="text-gray-400 text-sm">Leave your details and we'll contact you.</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); submitJoin();" class="space-y-4">
+                    <div>
+                        <input type="text" id="modalName" placeholder="Your Name" required
+                            class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-600 focus:border-brand-gold focus:outline-none transition-colors">
+                    </div>
+                    <div>
+                        <input type="tel" id="modalPhone" placeholder="Phone Number" required
+                            class="w-full bg-black/50 border border-white/10 rounded-xl p-4 text-white placeholder-gray-600 focus:border-brand-gold focus:outline-none transition-colors">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-brand-gold text-black font-montserrat font-black uppercase py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-brand-gold/20">
+                        Request Consultation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ⭐️ SUPABASE CONFIGURATION ⭐️
+        // Please replace these placeholders with your actual Supabase keys
+        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        function openModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.remove('hidden');
+            // Re-initialize icons inside modal if needed
+            lucide.createIcons();
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        async function submitJoin() {
+            const name = document.getElementById('modalName').value;
+            const phone = document.getElementById('modalPhone').value;
+
+            if (!name || !phone) {
+                alert("Please enter both name and phone number.");
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase
+                    .from('members')
+                    .insert([{ name: name, phone: phone, message: 'Requested via Home Modal' }]);
+
+                if (error) throw error;
+
+                alert('Thank you! We will be in touch shortly.');
+                closeModal();
+                document.getElementById('modalName').value = '';
+                document.getElementById('modalPhone').value = '';
+
+            } catch (error) {
+                console.error('Supabase Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
     </script>
 </body>
 
