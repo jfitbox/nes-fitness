@@ -386,21 +386,23 @@
         const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        function openModal() {
+        // Make functions global so inline onclick works
+        window.openModal = function () {
             const modal = document.getElementById('joinModal');
             modal.classList.remove('hidden');
             // Re-initialize icons inside modal if needed
-            lucide.createIcons();
+            if (window.lucide) lucide.createIcons();
             document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
-        function closeModal() {
+        window.closeModal = function () {
             const modal = document.getElementById('joinModal');
             modal.classList.add('hidden');
             document.body.style.overflow = ''; // Restore scrolling
         }
 
-        async function submitJoin() {
+        window.submitJoin = async function () {
+            console.log('Button clicked! Starting submission...');
             const name = document.getElementById('modalName').value;
             const phone = document.getElementById('modalPhone').value;
 
@@ -423,7 +425,7 @@
 
             } catch (error) {
                 console.error('Supabase Error:', error);
-                alert('An error occurred. Please try again.');
+                alert('Error: ' + error.message + '\n\nPlease check your Supabase "Table Editor" or "RLS Policies".');
             }
         }
     </script>
