@@ -423,8 +423,6 @@
 
         // 3. Submit Function
         window.submitJoin = async function () {
-            alert('Button works! sending data...'); // Immediate feedback
-
             // Try init again if needed
             if (!db) initDB();
 
@@ -460,8 +458,7 @@
         }
 
         // 4. Confirmation Code (To verify update)
-        console.log("NES FITNESS System Loaded");
-        // alert("System Updated! Please try the Join button now."); 
+        // alert("System Updated! Please try the Join button now.");
         // User asked to remove the alert if it works, but adding it temporarily for debugging is good.
         // I'll leave it commented out to avoid annoying them, relying on "Processing..." alert in submit function.
     </script>
