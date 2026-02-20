@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Portal | NES FITNESS</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#000000',
+                        'brand-gray': '#111111',
+                        'brand-charcoal': '#1A1A1A',
+                        'brand-gold': '#E5A900',
+                    },
+                    fontFamily: {
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'noto': ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="bg-brand-black text-white font-inter h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="hidden md:flex w-64 flex-col border-r border-white/5 bg-brand-gray/50 h-full p-6">
+        <a href="index.html" class="flex items-center gap-3 mb-12">
+            <i data-lucide="shield-check" class="text-brand-gold w-8 h-8 stroke-[2.5]"></i>
+            <span class="font-noto font-black text-xl tracking-normal uppercase leading-none">ADMIN<br>PORTAL</span>
+        </a>
+        <nav class="flex-1 space-y-4">
+            <a href="#"
+                class="flex items-center gap-4 px-4 py-3 bg-brand-gold text-black rounded-xl font-bold transition-all">
+                <i data-lucide="users" class="w-5 h-5"></i>
+                Members
+            </a>
+            <a href="#"
+                class="flex items-center gap-4 px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-all font-medium">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                Settings
+            </a>
+        </nav>
+        <div class="border-t border-white/10 pt-6">
+            <button onclick="logout()"
+                class="flex items-center gap-4 px-4 py-3 text-red-500 hover:bg-red-500/10 rounded-xl transition-all w-full font-medium">
+                <i data-lucide="log-out" class="w-5 h-5"></i>
+                Exit Admin
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 h-full flex flex-col relative">
+
+        <!-- Header (Mobile) -->
+        <header class="md:hidden flex items-center justify-between p-6 bg-brand-charcoal border-b border-white/5">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shield-check" class="text-brand-gold w-6 h-6"></i>
+                <span class="font-black">ADMIN PORTAL</span>
+            </div>
+            <button onclick="logout()" class="text-gray-400"><i data-lucide="log-out" class="w-6 h-6"></i></button>
+        </header>
+
+        <!-- Tool Bar -->
+        <div
+            class="p-6 md:p-8 border-b border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-brand-black/50 backdrop-blur-md z-10">
+            <div>
+                <h1 class="text-2xl font-bold font-montserrat">Member Management</h1>
+                <p class="text-gray-400 text-sm">Total Members: <span id="totalCount"
+                        class="text-brand-gold font-bold">Loading...</span></p>
+            </div>
+            <div class="flex gap-3 w-full md:w-auto">
+                <div class="relative flex-1 md:w-64">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                    <input type="text" placeholder="Search members..."
+                        class="w-full bg-brand-charcoal border border-white/10 rounded-lg py-2 pl-9 pr-4 text-sm focus:border-brand-gold focus:outline-none">
+                </div>
+                <button onclick="fetchMembers()"
+                    class="bg-brand-charcoal hover:bg-white/5 border border-white/10 text-white p-2 rounded-lg transition-colors">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Table Area -->
+        <div class="flex-1 overflow-auto p-6 md:p-8">
+            <div class="bg-brand-charcoal border border-white/5 rounded-xl overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-black/40 text-gray-400 uppercase text-xs font-bold">
+                        <tr>
+                            <th class="px-6 py-4">Name</th>
+                            <th class="px-6 py-4">Contact Info</th>
+                            <th class="px-6 py-4">Joined Date</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memberTableBody" class="divide-y divide-white/5">
+                        <!-- Loading State -->
+                        <tr>
+                            <td colspan="5" class="px-6 py-8 text-center text-gray-500">Loading members data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        lucide.createIcons();
+
+        // SUPABASE CONFIG
+        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // 1. AUTH CHECK
+        async function checkAdminAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            // In a real production app, we would verify the user's role here
+            // const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
+            // if (profile.role !== 'admin') window.location.href = 'dashboard.html';
+
+            fetchMembers();
+        }
+
+        // 2. FETCH MEMBERS
+        async function fetchMembers() {
+            const tableBody = document.getElementById('memberTableBody');
+            const countLabel = document.getElementById('totalCount');
+
+            try {
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                countLabel.innerText = data.length;
+                tableBody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No members found</td></tr>';
+                    return;
+                }
+
+                data.forEach(member => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-white/5 transition-colors';
+
+                    // Format Date
+                    const date = new Date(member.created_at).toLocaleDateString();
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4">
+                            <div class="font-bold text-white">${member.full_name || 'No Name'}</div>
+                            <div class="text-xs text-gray-500">ID: ${member.id.substring(0, 8)}...</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-gray-300"><i data-lucide="mail" class="w-3 h-3 inline mr-1"></i> ${member.email || 'N/A'}</div>
+                            <div class="text-gray-300 mt-1"><i data-lucide="phone" class="w-3 h-3 inline mr-1"></i> ${member.phone || 'N/A'}</div>
+                        </td>
+                        <td class="px-6 py-4 text-gray-400">
+                            ${date}
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="bg-green-500/10 text-green-500 px-2 py-1 rounded text-xs font-bold uppercase border border-green-500/20">Active</span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button class="text-gray-400 hover:text-white p-2 hover:bg-white/10 rounded-lg transition-colors">
+                                <i data-lucide="more-horizontal" class="w-5 h-5"></i>
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error('Error fetching members:', error);
+                tableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-red-400">Error loading data: ${error.message}</td></tr>`;
+            }
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        // Init
+        checkAdminAuth();
+
+    </script>
+</body>
+
+</html>

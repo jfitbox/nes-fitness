@@ -75,6 +75,50 @@
                 </div>
             </div>
 
+            <!-- Extra Fields for Signup -->
+            <div id="signupFields" class="hidden space-y-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Full Name</label>
+                    <div class="relative">
+                        <i data-lucide="user"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="text" id="fullName" placeholder="John Doe"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number</label>
+                    <div class="relative">
+                        <i data-lucide="phone"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="tel" id="phone" placeholder="0400 000 000"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extra Fields for Signup -->
+            <div id="signupFields" class="hidden space-y-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Full Name</label>
+                    <div class="relative">
+                        <i data-lucide="user"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="text" id="fullName" placeholder="John Doe"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number</label>
+                    <div class="relative">
+                        <i data-lucide="phone"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="tel" id="phone" placeholder="0400 000 000"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Password</label>
                 <div class="relative">
@@ -129,19 +173,52 @@
                 return;
             }
 
+            // Signup validation
+            let fullName = '';
+            let phone = '';
+            if (isSignUp) {
+                fullName = document.getElementById('fullName').value;
+                phone = document.getElementById('phone').value;
+                if (!fullName || !phone) {
+                    alert('Please enter your Name and Phone Number.');
+                    return;
+                }
+            }
+
             btn.innerText = 'Processing...';
             btn.disabled = true;
 
             try {
                 if (isSignUp) {
-                    // SIGN UP
+                    // 1. SIGN UP (Auth)
                     const { data, error } = await supabase.auth.signUp({
                         email: email,
                         password: password,
                     });
                     if (error) throw error;
-                    alert('Sign Up Successful! You can now log in.');
-                    toggleMode(); // Switch back to login
+
+                    // 2. CREATE PROFILE (DB)
+                    if (data.user) {
+                        const { error: profileError } = await supabase
+                            .from('profiles')
+                            .insert([
+                                {
+                                    id: data.user.id,
+                                    email: email,
+                                    full_name: fullName,
+                                    phone: phone
+                                }
+                            ]);
+
+                        if (profileError) {
+                            console.error('Profile creation failed:', profileError);
+                            alert('Account created but profile update failed. Please contact support.');
+                        } else {
+                            alert('Sign Up Successful! You can now log in.');
+                            toggleMode(); // Switch back to login
+                        }
+                    }
+
                 } else {
                     // LOGIN
                     const { data, error } = await supabase.auth.signInWithPassword({
@@ -149,6 +226,10 @@
                         password: password,
                     });
                     if (error) throw error;
+
+                    // Check if Admin (Simple check for now)
+                    // In a real app, we'd check the 'role' column in profiles
+                    // For now, redirect everyone to Dashboard
                     window.location.href = 'dashboard.html';
                 }
             } catch (error) {
@@ -165,15 +246,18 @@
             const title = document.getElementById('pageTitle');
             const btn = document.getElementById('loginBtn');
             const toggleText = document.getElementById('toggleText');
+            const signupFields = document.getElementById('signupFields');
 
             if (isSignUp) {
                 title.innerText = 'Create Account';
                 btn.innerText = 'Sign Up';
                 toggleText.innerHTML = 'Already a member? <a href="#" onclick="toggleMode()" class="text-white font-bold hover:text-brand-gold transition-colors">Sign In</a>';
+                signupFields.classList.remove('hidden');
             } else {
                 title.innerText = 'Welcome Back';
                 btn.innerText = 'Sign In';
                 toggleText.innerHTML = 'Not a member yet? <a href="#" onclick="toggleMode()" class="text-white font-bold hover:text-brand-gold transition-colors">Create Account</a>';
+                signupFields.classList.add('hidden');
             }
         }
     </script>
