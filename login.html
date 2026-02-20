@@ -76,47 +76,63 @@
             </div>
 
             <!-- Extra Fields for Signup -->
-            <div id="signupFields" class="hidden space-y-6">
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Full Name</label>
-                    <div class="relative">
-                        <i data-lucide="user"
-                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
-                        <input type="text" id="fullName" placeholder="John Doe"
-                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number</label>
-                    <div class="relative">
-                        <i data-lucide="phone"
-                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
-                        <input type="tel" id="phone" placeholder="0400 000 000"
-                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
-                    </div>
-                </div>
-            </div>
+            <div id="signupFields" class="hidden space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
 
-            <!-- Extra Fields for Signup -->
-            <div id="signupFields" class="hidden space-y-6">
+                <!-- Mandatory Fields -->
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Full Name</label>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Full Name <span
+                            class="text-red-500">*</span></label>
                     <div class="relative">
                         <i data-lucide="user"
                             class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
                         <input type="text" id="fullName" placeholder="John Doe"
-                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number</label>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Phone Number <span
+                            class="text-red-500">*</span></label>
                     <div class="relative">
                         <i data-lucide="phone"
                             class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
                         <input type="tel" id="phone" placeholder="0400 000 000"
-                            class="w-full bg-black/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600">
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm">
                     </div>
                 </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Address <span
+                            class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <i data-lucide="map-pin"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="text" id="address" placeholder="123 Gym St, Sydney"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Username (ID) <span
+                            class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <i data-lucide="at-sign"
+                            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                        <input type="text" id="username" placeholder="jdoe123"
+                            class="w-full bg-black/50 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm">
+                    </div>
+                </div>
+
+                <!-- Optional Fields -->
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Fitness Goal</label>
+                    <textarea id="fitnessGoal" rows="2" placeholder="e.g. Lose weight, Build muscle..."
+                        class="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-2">Medical History /
+                        Injuries</label>
+                    <textarea id="medicalHistory" rows="2" placeholder="e.g. Lower back pain, Asthma..."
+                        class="w-full bg-black/50 border border-white/10 rounded-xl p-3 focus:border-brand-gold focus:outline-none transition-colors text-white placeholder-gray-600 text-sm"></textarea>
+                </div>
+
             </div>
 
             <div>
@@ -174,13 +190,18 @@
             }
 
             // Signup validation
-            let fullName = '';
-            let phone = '';
+            let fullName, phone, address, username, fitnessGoal, medicalHistory;
+
             if (isSignUp) {
                 fullName = document.getElementById('fullName').value;
                 phone = document.getElementById('phone').value;
-                if (!fullName || !phone) {
-                    alert('Please enter your Name and Phone Number.');
+                address = document.getElementById('address').value;
+                username = document.getElementById('username').value;
+                fitnessGoal = document.getElementById('fitnessGoal').value;
+                medicalHistory = document.getElementById('medicalHistory').value;
+
+                if (!fullName || !phone || !address || !username) {
+                    alert('Please fill in all mandatory fields (Name, Phone, Address, Username).');
                     return;
                 }
             }
@@ -206,7 +227,11 @@
                                     id: data.user.id,
                                     email: email,
                                     full_name: fullName,
-                                    phone: phone
+                                    phone: phone,
+                                    address: address,
+                                    username: username,
+                                    fitness_goal: fitnessGoal,
+                                    medical_history: medicalHistory
                                 }
                             ]);
 
@@ -227,9 +252,6 @@
                     });
                     if (error) throw error;
 
-                    // Check if Admin (Simple check for now)
-                    // In a real app, we'd check the 'role' column in profiles
-                    // For now, redirect everyone to Dashboard
                     window.location.href = 'dashboard.html';
                 }
             } catch (error) {
