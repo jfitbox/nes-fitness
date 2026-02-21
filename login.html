@@ -42,7 +42,38 @@
 </head>
 
 <body class="bg-brand-black text-white font-inter h-screen flex items-center justify-center relative overflow-hidden">
+    <script>
+        window.isSignUp = false;
 
+        window.toggleMode = function () {
+            try {
+                console.log('Toggling mode');
+                window.isSignUp = !window.isSignUp;
+                const title = document.getElementById('pageTitle');
+                const btn = document.getElementById('loginBtn');
+                const loginFooter = document.getElementById('loginFooterText');
+                const signupFooter = document.getElementById('signupFooterText');
+                const signupFields = document.getElementById('signupFields');
+
+                if (window.isSignUp) {
+                    title.innerText = 'Create Account';
+                    btn.innerText = 'Sign Up';
+                    loginFooter.classList.add('hidden');
+                    signupFooter.classList.remove('hidden');
+                    signupFields.classList.remove('hidden');
+                } else {
+                    title.innerText = 'Welcome Back';
+                    btn.innerText = 'Sign In';
+                    loginFooter.classList.remove('hidden');
+                    signupFooter.classList.add('hidden');
+                    signupFields.classList.add('hidden');
+                }
+            } catch (err) {
+                alert('JS Error: ' + err.message);
+                console.error(err);
+            }
+        };
+    </script>
     <!-- Background -->
     <div
         class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070')] bg-cover bg-center opacity-20 blur-sm">
@@ -160,9 +191,17 @@
         </form>
 
         <!-- Footer -->
-        <div class="mt-8 text-center text-sm text-gray-400">
-            <p id="toggleText">Not a member yet? <a href="#" onclick="toggleMode()"
-                    class="text-white font-bold hover:text-brand-gold transition-colors">Create Account</a></p>
+        <div class="mt-8 text-center text-sm text-gray-400 relative z-20">
+            <p id="loginFooterText">
+                Not a member yet? <a href="#" onclick="window.toggleMode(); return false;" id="toSignupBtn"
+                    class="text-white font-bold hover:text-brand-gold transition-colors cursor-pointer relative z-50 underline decoration-transparent hover:decoration-brand-gold underline-offset-4 outline-none">Create
+                    Account</a>
+            </p>
+            <p id="signupFooterText" class="hidden">
+                Already a member? <a href="javascript:window.toggleMode()" id="toLoginBtn"
+                    class="text-white font-bold hover:text-brand-gold transition-colors cursor-pointer relative z-50 underline decoration-transparent hover:decoration-brand-gold underline-offset-4 outline-none">Sign
+                    In</a>
+            </p>
         </div>
 
     </div>
@@ -172,12 +211,32 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
-        const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // 1. UI LOGIC MOVED TO TOP
 
+
+        // 2. SUPABASE INITIALIZATION
+        let supabase = null;
+        try {
+            const supabaseUrl = 'https://uufyhygerddlrjgtxeyh.supabase.co';
+            const supabaseKey = 'sb_publishable_SInjSUnTug_jI5uH_Yv0mA_DZT6PbxY';
+            if (window.supabase) {
+                supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            } else {
+                console.error('Supabase library not loaded');
+                alert('System Error: Database connection failed. Please refresh.');
+            }
+        } catch (err) {
+            console.error('Supabase Init Error:', err);
+        }
+
+        // 3. AUTH HANDLER
         async function handleAuth(e) {
             e.preventDefault();
+
+            if (!supabase) {
+                alert('System Error: Database not connected.');
+                return;
+            }
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -192,7 +251,7 @@
             // Signup validation
             let fullName, phone, address, username, fitnessGoal, medicalHistory;
 
-            if (isSignUp) {
+            if (window.isSignUp) {
                 fullName = document.getElementById('fullName').value;
                 phone = document.getElementById('phone').value;
                 address = document.getElementById('address').value;
@@ -210,11 +269,16 @@
             btn.disabled = true;
 
             try {
-                if (isSignUp) {
+                if (window.isSignUp) {
                     // 1. SIGN UP (Auth)
                     const { data, error } = await supabase.auth.signUp({
                         email: email,
                         password: password,
+                        options: {
+                            data: {
+                                full_name: fullName
+                            }
+                        }
                     });
                     if (error) throw error;
 
@@ -239,8 +303,7 @@
                             console.error('Profile creation failed:', profileError);
                             alert('Account created but profile update failed. Please contact support.');
                         } else {
-                            alert('Sign Up Successful! You can now log in.');
-                            toggleMode(); // Switch back to login
+                            showSuccessModal();
                         }
                     }
 
@@ -261,26 +324,47 @@
                 btn.disabled = false;
             }
         }
+    </script>
 
-        let isSignUp = false;
-        function toggleMode() {
-            isSignUp = !isSignUp;
-            const title = document.getElementById('pageTitle');
-            const btn = document.getElementById('loginBtn');
-            const toggleText = document.getElementById('toggleText');
-            const signupFields = document.getElementById('signupFields');
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div class="relative bg-brand-gray border border-brand-gold/20 p-8 rounded-2xl shadow-2xl max-w-sm w-full mx-4 text-center transform scale-95 opacity-0 transition-all duration-300"
+            id="successModalContent">
+            <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="check-circle-2" class="w-8 h-8 text-brand-gold"></i>
+            </div>
+            <h3 class="text-xl font-montserrat font-bold text-white mb-2">Account Created!</h3>
+            <p class="text-gray-400 text-sm mb-6">Your registration was successful. You can now sign in to access your
+                dashboard.</p>
+            <button onclick="closeSuccessModal()"
+                class="w-full bg-brand-gold text-black font-montserrat font-bold py-3 text-sm rounded-xl hover:bg-white transition-colors">
+                Continue to Sign In
+            </button>
+        </div>
+    </div>
 
-            if (isSignUp) {
-                title.innerText = 'Create Account';
-                btn.innerText = 'Sign Up';
-                toggleText.innerHTML = 'Already a member? <a href="#" onclick="toggleMode()" class="text-white font-bold hover:text-brand-gold transition-colors">Sign In</a>';
-                signupFields.classList.remove('hidden');
-            } else {
-                title.innerText = 'Welcome Back';
-                btn.innerText = 'Sign In';
-                toggleText.innerHTML = 'Not a member yet? <a href="#" onclick="toggleMode()" class="text-white font-bold hover:text-brand-gold transition-colors">Create Account</a>';
-                signupFields.classList.add('hidden');
-            }
+    <script>
+        function showSuccessModal() {
+            const modal = document.getElementById('successModal');
+            const content = document.getElementById('successModalContent');
+            modal.classList.remove('hidden');
+            // Allow display: block to render before triggering opacity transition
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('successModal');
+            const content = document.getElementById('successModalContent');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                window.toggleMode(); // Ensure they are switched back to the login view
+            }, 300); // Wait for transition
         }
     </script>
 </body>
